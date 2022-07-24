@@ -1,0 +1,34 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\Richard Maru\\Documents\\School Works\\PROGRAMMING\\Flutter\\remcards\\remcards\\build\\awesome_notifications\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-zh-rHK\\values-zh-rHK.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Richard Maru\\.gradle\\caches\\transforms-2\\files-2.1\\dff32a206c374e0a23f32720563d9e44\\core-1.7.0\\res\\values-zh-rHK\\values-zh-rHK.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "C:\\Users\\Richard Maru\\Documents\\School Works\\PROGRAMMING\\Flutter\\remcards\\remcards\\build\\awesome_notifications\\intermediates\\res\\merged\\release\\values-zh-rHK\\values-zh-rHK.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Richard Maru\\.gradle\\caches\\transforms-2\\files-2.1\\dff32a206c374e0a23f32720563d9e44\\core-1.7.0\\res\\values-zh-rHK\\values-zh-rHK.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,34 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\Richard Maru\\Documents\\School Works\\PROGRAMMING\\Flutter\\remcards\\remcards\\build\\flutter_native_timezone\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-ka\\values-ka.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Richard Maru\\.gradle\\caches\\transforms-2\\files-2.1\\bf57ee6ef03cef43525091c12acf6534\\core-1.6.0\\res\\values-ka\\values-ka.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "C:\\Users\\Richard Maru\\Documents\\School Works\\PROGRAMMING\\Flutter\\remcards\\remcards\\build\\flutter_native_timezone\\intermediates\\res\\merged\\release\\values-ka\\values-ka.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Richard Maru\\.gradle\\caches\\transforms-2\\files-2.1\\bf57ee6ef03cef43525091c12acf6534\\core-1.6.0\\res\\values-ka\\values-ka.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        }
+    ]
+}

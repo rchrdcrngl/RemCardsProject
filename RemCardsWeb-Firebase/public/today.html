@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+
+    <script type="text/javascript" src= "https://code.jquery.com/jquery-2.1.1.min.js"></script> 
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,800" rel="stylesheet">
+	<script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
+
+	<!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+	<script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-analytics.js"></script>
+  
+	<!-- Add Firebase products that you want to use -->
+	<script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-firestore.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-database.js"></script>
+
+	<script>
+		// TODO: Replace the following with your app's Firebase project configuration
+		// For Firebase JavaScript SDK v7.20.0 and later, `measurementId` is an optional field
+		var firebaseConfig = {
+			apiKey: "AIzaSyBwKV4z-6AbrHQ2J9MFTZGKKtF-9saWU90",
+			authDomain: "remcards.firebaseapp.com",
+			databaseURL: "https://remcards.firebaseio.com",
+			projectId: "remcards",
+			storageBucket: "remcards.appspot.com",
+			messagingSenderId: "462192442306",
+			appId: "1:462192442306:web:40d9f0808900d09521745b",
+			measurementId: "G-VN87SJZWR1"
+		};
+	
+		// Initialize Firebase
+		firebase.initializeApp(firebaseConfig);
+    </script>
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    
+    <!-- Style -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/materialize.css">
+    
+ 
+
+    <title>RemCards - Today</title>
+  </head>
+  <body>
+  
+    
+    <aside class="sidebar">
+      <div class="toggle">
+        <a href="#" class="burger js-menu-toggle" data-toggle="collapse" data-target="#main-navbar">
+              <span></span>
+            </a>
+      </div>
+      <div class="side-inner">
+
+        <div class="logo-wrap">
+          <img src="images/remcard_logo.png" alt="IMG" class="logo">
+          <span class="logo-text">RemCards</span>
+        </div>
+          
+        
+        <div class="nav-menu">
+          <ul>
+            <li><a href="home.html" class="d-flex align-items-center"><span class="wrap-icon icon-home2 mr-3"></span><span class="menu-text">Home</span></a></li>
+            <li class="active"><a href="today.html" class="d-flex align-items-center"><span class="wrap-icon fa fa-calendar mr-3"></span><span class="menu-text">Today</span></a></li>
+            <li><a href="focus.html" class="d-flex align-items-center"><span class="wrap-icon fa fa-star mr-3"></span><span class="menu-text">Urgent</span></a></li>
+            <li><a href="#card-add" class="d-flex align-items-center modal-trigger"><span class="wrap-icon mr-3 fa fa-plus"></span><span class="menu-text" >Add Card</span></a></li>
+            <li><a href="#" class="d-flex align-items-center" onclick="signout()"><span class="wrap-icon mr-3 fa fa-arrow-circle-right"></span><span class="menu-text">Logout</span></a></li>
+          </ul>
+        </div>
+      </div>
+      
+    </aside>
+
+
+
+    <a class="float modal-trigger" href="#card-add">
+      <i class="fa fa-plus my-float"></i>
+    </a>
+    
+    <main>
+      
+      <div class="site-section">
+        <div class="container">
+          
+          <div class="row justify-content-center">          
+            <p class="center-align">
+              <div id="card-list"></div>
+                
+              </div>
+            </p>
+          
+
+          </div>
+        </div>
+      </div>
+    </main>
+  
+
+    <div id="card-add" class="modal">
+      <div class="modal-content">
+        <h4 class="center-align">Add RemCard</h4>
+        <div class="row">
+          <form class="col s12">
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="frm-subjcode"type="text" class="validate">
+                <label for="frm-subjcode">Subject Code</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="frm-tskdesc"type="text" class="validate">
+                <label for="frm-tskdesc">Task Description</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s4">
+                <input id="frm-tskdate" type="text" class="datepicker">
+                <label for="frm-tskdate">Task Deadline</label>
+              </div>
+              <div class="input-field col s4">
+                <select id="frm-tsklvl">
+                  <option value="" disabled selected>Task Level</option>
+                  <option value="1">Low Priority</option>
+                  <option value="2">Mid Priority</option>
+                  <option value="3">High Priority</option>
+                </select>
+                <label>Task Level</label>
+              </div>
+              <div class="input-field col s4">
+                <select id="frm-tskstat">
+                  <option value="" disabled selected>Task Status</option>
+                  <option value="0">Idle</option>
+                  <option value="1">Started</option>
+                  <option value="2">Ongoing</option>
+                  <option value="3">Urgent</option>
+                  <option value="4">Finished</option>
+                </select>
+                <label>Task Status</label>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a onclick="addCard()" class="modal-close waves-effect waves-green btn-flat">Add</a>
+      </div>
+    </div>
+    
+  
+    <div id="card-edit" class="modal">
+      <div class="modal-content">
+        <h4 class="center-align">Edit RemCard</h4>
+        <div class="row">
+          <form class="col s12">
+            <div class="row">
+              <div class="input-field col s6">
+                <input id="edit-cardid" type="text" readonly class="validate">
+                      <label for="edit-cardid">Card ID</label>
+              </div>
+              <div class="input-field col s6">
+                <input id="edit-subjcode"type="text" class="validate">
+                <label for="edit-subjcode">Subject Code</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="edit-tskdesc"type="text" class="validate">
+                <label for="edit-tskdesc">Task Description</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s4">
+                <input id="edit-tskdate" type="text" class="datepicker">
+                <label for="edit-tskdate">Task Deadline</label>
+              </div>
+              <div class="input-field col s4">
+                <select id="edit-tsklvl">
+                  <option value="" disabled selected>Task Level</option>
+                  <option value="1">Low Priority</option>
+                  <option value="2">Mid Priority</option>
+                  <option value="3">High Priority</option>
+                </select>
+                <label>Task Level</label>
+              </div>
+              <div class="input-field col s4">
+                <select id="edit-tskstat">
+                  <option value="" disabled selected>Task Status</option>
+                  <option value="0">Idle</option>
+                  <option value="1">Started</option>
+                  <option value="2">Ongoing</option>
+                  <option value="3">Urgent</option>
+                  <option value="4">Finished</option>
+                </select>
+                <label>Task Status</label>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a onclick="editCard()" class="modal-close waves-effect waves-green btn-flat">Edit</a>
+      </div>
+    </div>
+    
+    <script>
+    $(document).ready(function(){
+      $('.modal').modal();
+      })
+    </script>
+    
+
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/focus_today.js"></script>
+    <script src="js/materialize.js"></script>
+  </body>
+</html>

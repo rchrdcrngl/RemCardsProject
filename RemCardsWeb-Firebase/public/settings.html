@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+
+    <script type="text/javascript" src= "https://code.jquery.com/jquery-2.1.1.min.js"></script> 
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,800" rel="stylesheet">
+	<script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
+
+	<!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+	<script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-analytics.js"></script>
+  
+	<!-- Add Firebase products that you want to use -->
+	<script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-firestore.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-database.js"></script>
+
+	<script>
+		// TODO: Replace the following with your app's Firebase project configuration
+		// For Firebase JavaScript SDK v7.20.0 and later, `measurementId` is an optional field
+		var firebaseConfig = {
+			apiKey: "AIzaSyBwKV4z-6AbrHQ2J9MFTZGKKtF-9saWU90",
+			authDomain: "remcards.firebaseapp.com",
+			databaseURL: "https://remcards.firebaseio.com",
+			projectId: "remcards",
+			storageBucket: "remcards.appspot.com",
+			messagingSenderId: "462192442306",
+			appId: "1:462192442306:web:40d9f0808900d09521745b",
+			measurementId: "G-VN87SJZWR1"
+		};
+	
+		// Initialize Firebase
+		firebase.initializeApp(firebaseConfig);
+    </script>
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    
+    <!-- Style -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/materialize.css">
+
+   
+    
+
+    <title>RemCards - Settings</title>
+  </head>
+  <body>
+  
+    
+    <aside class="sidebar">
+      <div class="toggle">
+        <a href="#" class="burger js-menu-toggle" data-toggle="collapse" data-target="#main-navbar">
+              <span></span>
+            </a>
+      </div>
+      <div class="side-inner">
+
+        <div class="logo-wrap">
+          <img src="images/remcard_logo.png" alt="IMG" class="logo">
+          <span class="logo-text">RemCards</span>
+        </div>
+          
+        
+        <div class="nav-menu">
+          <ul>
+            <li><a href="home.html" class="d-flex align-items-center"><span class="wrap-icon icon-home2 mr-3"></span><span class="menu-text">Home</span></a></li>
+            <li><a href="#card-add"  class="d-flex align-items-center modal-trigger"><span class="wrap-icon mr-3 fa fa-plus"></span><span class="menu-text" >Add Card</span></a></li>
+            <li class="active"><a href="settings.html" class="d-flex align-items-center"><span class="wrap-icon mr-3 fa fa-cog"></span><span class="menu-text">Settings</span></a></li>
+            <li><a href="#" class="d-flex align-items-center" onclick="signout()"><span class="wrap-icon mr-3 fa fa-arrow-circle-right"></span><span class="menu-text">Logout</span></a></li>
+          </ul>
+        </div>
+      </div>
+      
+    </aside>
+
+
+ 
+      
+    <script>
+    var user = firebase.auth().currentUser;
+    var name, email, photoUrl, uid, emailVerified;
+
+    if (user != null) {
+    name = user.displayName;
+    email = user.email;
+    photoUrl = user.photoURL;
+    emailVerified = user.emailVerified;
+    uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
+                    // this value to authenticate with your backend server, if
+                    // you have one. Use User.getToken() instead.
+
+     let label = document.getElementById("userid");
+     label.value = "Hello There, ${name}!";
+    }
+    </script>
+
+
+      <div class="site-section">
+        <div class="container">
+          
+          <div class="row justify-content-center">          
+           
+          <i class="cursiveh1" id="userid">Hello There!</i>
+
+          </div>
+        </div>
+      </div>
+    </main>
+  
+    <div id="card-add" class="modal">
+        <div class="modal-content">
+          <h4 class="center-align">Add RemCard</h4>
+          <div class="row">
+            <form class="col s12">
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="frm-subjcode"type="text" class="validate">
+                  <label for="frm-subjcode">Subject Code</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="frm-tskdesc"type="text" class="validate">
+                  <label for="frm-tskdesc">Task Description</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s4">
+                  <input id="frm-tskdate" type="text" class="datepicker">
+                  <label for="frm-tskdate">Task Deadline</label>
+                </div>
+                <div class="input-field col s4">
+                  <select id="frm-tsklvl">
+                    <option value="" disabled selected>Task Level</option>
+                    <option value="1">Low Priority</option>
+                    <option value="2">Mid Priority</option>
+                    <option value="3">High Priority</option>
+                  </select>
+                  <label>Task Level</label>
+                </div>
+                <div class="input-field col s4">
+                  <select id="frm-tskstat">
+                    <option value="" disabled selected>Task Status</option>
+                    <option value="0">Idle</option>
+                    <option value="1">Started</option>
+                    <option value="2">Ongoing</option>
+                    <option value="3">Urgent</option>
+                    <option value="4">Finished</option>
+                  </select>
+                  <label>Task Status</label>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a onclick="addCard()" class="modal-close waves-effect waves-green btn-flat">Add</a>
+        </div>
+      </div>
+
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/home.js"></script>
+    <script src="js/materialize.js"></script>
+  </body>
+</html>
