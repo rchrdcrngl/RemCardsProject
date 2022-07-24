@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="@color/background">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/settings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="15dp"
+                android:clickable="true"
+                android:fontFamily="sans-serif-light"
+                android:layout_alignParentLeft="true"
+                android:onClick="onClick"
+                android:text="Reminders"
+                android:textColor="@color/mainText"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginRight="40dp"
+                android:layout_alignParentRight="true">
+
+                <Button
+                    android:id="@+id/button_add"
+                    android:layout_width="40dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/round_primary"
+                    android:text="+"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="14sp"></Button>
+
+                <Button
+                    android:id="@+id/button_refresh"
+                    android:layout_width="40dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/round_gray"
+                    android:drawableLeft="@drawable/ic_baseline_refresh_24"
+                    android:paddingLeft="8dip"
+                    android:paddingRight="20dip"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"></Button>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="70dp">
+
+       <LinearLayout
+           android:id="@+id/isEmpty"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_centerInParent="true"
+           android:visibility="invisible"
+           android:orientation="vertical">
+           <LinearLayout
+               android:layout_width="240dp"
+               android:background="@drawable/notskfrm"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="15dp"
+               android:layout_marginTop="15dp"
+               android:layout_marginRight="15dp"
+               android:orientation="horizontal">
+
+               <RelativeLayout
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content">
+
+                   <RelativeLayout
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:orientation="horizontal"
+                       android:layout_marginBottom="10dp">
+
+
+                       <LinearLayout
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:orientation="vertical"
+                           android:layout_alignParentLeft="true"
+                           android:layout_marginRight="20dp">
+
+                           <TextView
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:fontFamily="sans-serif-black"
+                               android:text="CONGRATULATIONS!"
+                               android:textColor="@color/colorWhite"
+                               android:textSize="18sp"></TextView>
+
+                           <TextView
+                               android:layout_width="150dp"
+                               android:layout_height="wrap_content"
+                               android:layout_marginBottom="15dp"
+                               android:text="You don't have any tasks at the moment..."
+                               android:textColor="@color/colorWhite"
+                               android:textSize="11sp"
+                               android:textStyle="italic"></TextView>
+
+
+                       </LinearLayout>
+
+
+
+                       <ImageView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_alignParentRight="true"
+                           android:layout_marginRight="10dp"
+                           android:background="@drawable/notask"></ImageView>
+                   </RelativeLayout>
+
+               </RelativeLayout>
+
+
+           </LinearLayout>
+
+       </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="4dp"
+            android:scrollbars="vertical"></androidx.recyclerview.widget.RecyclerView>
+
+    </RelativeLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

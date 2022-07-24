@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#726a95</color>
+    <color name="colorPrimaryLight">#709fb0</color>
+    <color name="colorAccent">#a0c1b8</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="grad_a">#8360c3</color>
+    <color name="grad_b">#2ebf91</color>
+    <color name="grad_c">#fffc00</color>
+    <color name="pastelYellow">#f4ebc1</color>
+    <color name="pastelGray">#838383</color>
+    <color name="pastelDarkCream">#dfd3c3</color>
+    <color name="background">#000000</color>
+    <color name="mainText">#FFFFFF</color>
+</resources>

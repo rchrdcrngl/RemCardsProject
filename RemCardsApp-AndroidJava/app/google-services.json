@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "462192442306",
+    "firebase_url": "https://remcards.firebaseio.com",
+    "project_id": "remcards",
+    "storage_bucket": "remcards.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:462192442306:android:414882df15311e3121745b",
+        "android_client_info": {
+          "package_name": "com.example.reminders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "462192442306-j89g8hictp34hkfg99s2olo5s7c20jva.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2S07cU5Y3uoLFbFOVaumsqr8JxaJc-EE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "462192442306-j89g8hictp34hkfg99s2olo5s7c20jva.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

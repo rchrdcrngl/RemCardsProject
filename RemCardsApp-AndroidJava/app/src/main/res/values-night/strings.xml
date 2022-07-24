@@ -1,0 +1,21 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">RemCards</string>
+    <string name="card1">CS2601</string>
+    <string name="clearTab">Clearing Data</string>
+    <string name="jsonUpdate">This will clear your existing data! Parsing JSON file...</string>
+    <string name="version" tools:ignore="ExtraTranslation">Version: 1.5</string>
+    <string-array name="tsklevelselector">
+        <item>Low Priority</item>
+        <item>Mid Priority</item>
+        <item>High Priority</item>
+    </string-array>
+
+    <string-array name="sort" tools:ignore="ExtraTranslation">
+        <item>By Chronological Order</item>
+        <item>By Task Deadline</item>
+        <item>By Task Level</item>
+    </string-array>
+
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+</resources>
