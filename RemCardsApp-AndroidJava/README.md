@@ -1,4 +1,4 @@
-#RemCards App (Android Java)
+# RemCards App (Android Java)
  - uses Firebase as database
 
 1. All RemCards
