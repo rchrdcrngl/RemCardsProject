@@ -1,5 +1,5 @@
 # RemCards App (Flutter)
- - Uses my own REST API that is hosted on Heroku
+ - Uses my own REST API that is hosted on Cyclic
  - Uses MongoDB for database
 
 
