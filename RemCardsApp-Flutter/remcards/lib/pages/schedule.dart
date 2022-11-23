@@ -47,10 +47,10 @@ class eventTable {
       this.minFinish});
 
   factory eventTable.fromJson(String dayStr, Map<String, dynamic> json) {
-    var time = json["time"];
-    var time2 = time.toString().split("-");
-    var start = time2[0].split(":");
-    var end = time2[1].split(":");
+    var startTime = json['startTime'];
+    var endTime = json['endTime'];
+    var start = startTime.split(":");
+    var end = endTime.split(":");
     var hS = int.parse(start[0]);
     var mS = int.parse(start[1]);
     var hF = int.parse(end[0]);
@@ -126,42 +126,15 @@ processNotification(List<dayTable> resp) async {
       daytbl1.data.forEach((element) {
         eventTable tbe = eventTable.fromJson(daytbl1.day, element);
         createScheduledNotification(
-            1, weekday(tbe.day), tbe.hourStart, tbe.minStart, tbe.name);
+            1, daysToNum[tbe.day] ?? 1, tbe.hourStart, tbe.minStart, tbe.name);
       });
     }
   }
   print("All notifications are scheduled");
 }
 
-int weekday(String day) {
-  int weekday = 1;
-  switch (day) {
-    case "mon":
-      weekday = 1;
-      break;
-    case "tue":
-      weekday = 2;
-      break;
-    case "wed":
-      weekday = 3;
-      break;
-    case "thurs":
-      weekday = 4;
-      break;
-    case "fri":
-      weekday = 5;
-      break;
-    case "sat":
-      weekday = 6;
-      break;
-    case "sun":
-      weekday = 7;
-      break;
-    default:
-      weekday = 1;
-  }
-  return weekday;
-}
+
+Map<String, int> daysToNum = {'mon':1,'tue':2,'wed':3,'thu':4,'fri':5,'sat':6,'sun':7};
 
 class _SchedulePageState extends State<SchedulePage> {
   List<dayTable> dayTableList = [];
