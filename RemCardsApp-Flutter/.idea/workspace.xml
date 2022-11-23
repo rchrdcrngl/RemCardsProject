@@ -5,17 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dd05a991-5472-44bb-9cb9-1a09a1663ecc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/remcards.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/remcards.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/remcards/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/remcards/.dart_tool/package_config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/remcards/.dart_tool/package_config_subset" beforeDir="false" afterPath="$PROJECT_DIR$/remcards/.dart_tool/package_config_subset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/remcards/.dart_tool/version" beforeDir="false" afterPath="$PROJECT_DIR$/remcards/.dart_tool/version" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/remcards/.flutter-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/remcards/.flutter-plugins" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/remcards/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/remcards/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/remcards/.packages" beforeDir="false" afterPath="$PROJECT_DIR$/remcards/.packages" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/remcards/lib/generated_plugin_registrant.dart" beforeDir="false" afterPath="$PROJECT_DIR$/remcards/lib/generated_plugin_registrant.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/remcards/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/remcards/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/remcards/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/remcards/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/remcards/lib/pages/addcard.dart" beforeDir="false" afterPath="$PROJECT_DIR$/remcards/lib/pages/addcard.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/remcards/lib/pages/addsched.dart" beforeDir="false" afterPath="$PROJECT_DIR$/remcards/lib/pages/addsched.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/remcards/lib/pages/cardBuilder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/remcards/lib/pages/cardBuilder.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/remcards/lib/pages/components/roundedtextfield.dart" beforeDir="false" afterPath="$PROJECT_DIR$/remcards/lib/pages/components/roundedtextfield.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/remcards/lib/pages/editcard.dart" beforeDir="false" afterPath="$PROJECT_DIR$/remcards/lib/pages/editcard.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/remcards/lib/pages/editsched.dart" beforeDir="false" afterPath="$PROJECT_DIR$/remcards/lib/pages/editsched.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/remcards/lib/pages/increment.dart" beforeDir="false" afterPath="$PROJECT_DIR$/remcards/lib/pages/increment.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/remcards/lib/pages/login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/remcards/lib/pages/login.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/remcards/lib/pages/register.dart" beforeDir="false" afterPath="$PROJECT_DIR$/remcards/lib/pages/register.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/remcards/lib/pages/schedule.dart" beforeDir="false" afterPath="$PROJECT_DIR$/remcards/lib/pages/schedule.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/remcards/lib/pages/settings.dart" beforeDir="false" afterPath="$PROJECT_DIR$/remcards/lib/pages/settings.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,7 +41,6 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
     <property name="cidr.known.project.marker" value="true" />
-    <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.15" />

@@ -1,21 +1,13 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:awesome_notifications/android_foreground_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:http/http.dart' as http;
-import 'package:remcards/const.dart';
 import 'package:remcards/pages/addcard.dart';
 import 'package:remcards/pages/cardBuilder.dart';
-import 'package:remcards/pages/schedtest.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
 import 'pages/login.dart';
 import 'pages/schedule.dart';
 import 'pages/settings.dart';
-import 'package:notification_permissions/notification_permissions.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,13 +17,13 @@ void main() async {
       channelName: 'Basic Notifications',
       defaultColor: Colors.teal,
       importance: NotificationImportance.Default,
-      channelShowBadge: true,
+      channelShowBadge: true, channelDescription: 'Allows RemCard to be on the basic notification channel',
     ),
     NotificationChannel(
       channelKey: 'scheduled_channel',
       channelName: 'Scheduled Notifications',
       defaultColor: Colors.teal,
-      importance: NotificationImportance.Default,
+      importance: NotificationImportance.Default, channelDescription: 'Allows RemCard to create scheduled notifications',
     )
   ]);
   AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
@@ -134,8 +126,6 @@ class _MainPageState extends State<MainPage> {
   }
 
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   List<Widget> _widgetOptions = <Widget>[
     cardBuilder2(),
     SchedulePage(),

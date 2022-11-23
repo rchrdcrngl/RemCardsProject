@@ -1,12 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:remcards/const.dart';
-import 'package:remcards/main.dart';
-import 'package:remcards/pages/schedule.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'components/AppBar.dart';
@@ -70,7 +66,6 @@ class _addSchedForm extends State<addSchedForm> {
     return null;
   }
 
-  @override
   bool _isLoading = false;
   var errorMsg;
   TextEditingController subject;
@@ -282,8 +277,7 @@ addSched(List<String> day, String title, String start, String finish) async {
   };
 
   day.forEach((element) async {
-    Map data = {"subject": title, "time": (start + "-" + finish)};
-    var jsonResponse;
+    Map data = {"subject": title, "startTime": start, "endTime": finish};
     var response = await http.post(Uri.parse(schedURI + "/" + element),
         headers: headers, body: jsonEncode(data));
     if (response.statusCode == 200) {

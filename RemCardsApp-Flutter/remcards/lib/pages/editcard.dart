@@ -1,15 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:remcards/const.dart';
-import 'package:remcards/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:remcards/pages/cardBuilder.dart';
 import 'components/AppBar.dart';
 import 'components/roundedtextfield.dart';
+
+const Map<String, int> tskLevelMap = {'Normal':0, 'Needs Action': 1, 'Urgent': 2};
 
 class editCardForm extends StatefulWidget {
   final String id;
@@ -85,7 +83,6 @@ class _editCardForm extends State<editCardForm> {
     }
   }
 
-  @override
   bool _isLoading = false;
   var errorMsg;
   TextEditingController subjectCode;
@@ -182,34 +179,20 @@ editCard(String id, String subjcode, String tskdesc, String tskdate,
     String tsklvl, BuildContext context) async {
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
   String token = sharedPreferences.getString("token");
-  int tsklvl_int = 0;
+  int tsklvl_int = tskLevelMap[tsklvl] ?? 0;
   Map<String, String> headers = {
     'Accept': '*/*',
     "Access-Control_Allow_Origin": "*",
     "Content-Type": "application/json",
     "x-access-token": token,
   };
-  switch (tsklvl) {
-    case "Normal":
-      tsklvl_int = 0;
-      break;
-    case "Needs Action":
-      tsklvl_int = 1;
-      break;
-    case "Urgent":
-      tsklvl_int = 2;
-      break;
-    default:
-      tsklvl_int = 0;
-  }
-  print(tsklvl_int);
+
   Map data = {
     'subjcode': subjcode,
     'tskdesc': tskdesc,
     'tskdate': tskdate,
     'tsklvl': tsklvl_int
   };
-  var jsonResponse;
   var response = await http.post(Uri.parse(cardsURI + "/" + id),
       headers: headers, body: jsonEncode(data));
   if (response.statusCode == 204) {

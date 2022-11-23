@@ -1,14 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:remcards/components/notifications.dart';
 import 'package:remcards/pages/components/roundedtextfield.dart';
 import 'package:remcards/pages/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
 import '../main.dart';
 import '../const.dart';
-import 'package:awesome_notifications/awesome_notifications.dart';
 
 class LoginPage extends StatefulWidget {
   @override

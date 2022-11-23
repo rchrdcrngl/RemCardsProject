@@ -1,15 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:remcards/const.dart';
 import 'package:remcards/main.dart';
 import 'package:remcards/pages/components/roundedtextfield.dart';
-import 'package:remcards/pages/schedule.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'components/AppBar.dart';
 
 class editSchedForm extends StatefulWidget {
@@ -75,7 +71,6 @@ class _editSchedForm extends State<editSchedForm> {
     return null;
   }
 
-  @override
   bool _isLoading = false;
   var errorMsg;
   TextEditingController subject;
@@ -201,7 +196,6 @@ editSched(
   };
 
   Map data = {"subject": title, "time": (start + "-" + finish)};
-  var jsonResponse;
   var response = await http.post(Uri.parse(schedURI + "/" + day + "/" + id),
       headers: headers, body: jsonEncode(data));
   if (response.statusCode == 204) {

@@ -1,14 +1,10 @@
-import 'package:flutter/cupertino.dart';
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
-import 'package:get/get.dart';
 import 'package:remcards/components/notifications.dart';
 import 'package:remcards/const.dart';
-import 'package:remcards/pages/cardBuilder.dart';
 import 'package:remcards/pages/components/roundedtextfield.dart';
-import 'package:remcards/pages/schedule.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../main.dart';
 import 'components/AppBar.dart';
@@ -22,7 +18,6 @@ class addCardForm extends StatefulWidget {
 }
 
 class _addCardForm extends State<addCardForm> {
-  @override
   bool _isLoading = false;
   var errorMsg;
   DateTime date;
@@ -170,7 +165,6 @@ addCard(String subjcode, String tskdesc, String tskdate, String tsklvl) async {
     'tsklvl': tsklvl_int,
     'tskstat': 0
   };
-  var jsonResponse;
   var response = await http.post(Uri.parse(cardsURI),
       headers: headers, body: jsonEncode(data));
   if (response.statusCode == 201) {

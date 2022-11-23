@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:api_cache_manager/models/cache_db_model.dart';
 import 'package:api_cache_manager/utils/cache_manager.dart';
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_timetable_view/flutter_timetable_view.dart';
@@ -11,7 +10,6 @@ import 'package:remcards/pages/addsched.dart';
 import 'package:remcards/pages/editsched.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../const.dart';
-import '../main.dart';
 import 'components/AppBar.dart';
 
 class SchedulePage extends StatefulWidget {
@@ -148,7 +146,6 @@ class _SchedulePageState extends State<SchedulePage> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: rcAppBarActions("Schedule", <Widget>[
         IconButton(
@@ -184,11 +181,11 @@ class _SchedulePageState extends State<SchedulePage> {
     });
   }
 
-  Future<Null> refresh() {
+  Future<Null> refresh() async {
     APICacheManager().deleteCache("API-Schedule");
     cancelScheduledNotifications();
     loadPosts();
-    print("Refresh");
+    return null;
   }
 
   @override
@@ -223,9 +220,6 @@ class _SchedulePageState extends State<SchedulePage> {
 
         await APICacheManager().addCacheData(cacheDBModel);
 
-        SharedPreferences sharedPreferences =
-            await SharedPreferences.getInstance();
-        //sharedPreferences.setBool("isProcessed", false);
         List jsonResponse = json.decode(response.body);
         var resp =
             jsonResponse.map((day) => new dayTable.fromJson(day)).toList();

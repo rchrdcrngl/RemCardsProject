@@ -7,7 +7,6 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:remcards/const.dart';
-import 'package:remcards/main.dart';
 import 'package:remcards/pages/editcard.dart';
 import 'package:remcards/pages/increment.dart';
 import 'package:remcards/pages/login.dart';

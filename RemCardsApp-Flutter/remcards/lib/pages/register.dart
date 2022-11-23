@@ -2,8 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:remcards/const.dart';
-import 'package:remcards/main.dart';
-import 'package:remcards/pages/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../const.dart';
 import 'package:get/get.dart';
