@@ -5,9 +5,10 @@ import 'package:http/http.dart' as http;
 import 'package:remcards/const.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'components/AppBar.dart';
-import 'components/roundedtextfield.dart';
+import 'components/RoundedTextField.dart';
 
-const Map<String, int> tskLevelMap = {'Normal':0, 'Needs Action': 1, 'Urgent': 2};
+const Map<String, int> tskLevelMapFromString = {'Normal':0, 'Needs Action': 1, 'Urgent': 2};
+const Map<int, String> tskLevelMapFromInt = {0:'Normal', 1:'Needs Action', 2:'Urgent'};
 
 class editCardForm extends StatefulWidget {
   final String id;
@@ -68,19 +69,7 @@ class _editCardForm extends State<editCardForm> {
     var dateParsed = (widget.tskdate).split("/");
     date = new DateTime(int.parse(dateParsed[2]), int.parse(dateParsed[0]),
         int.parse(dateParsed[1]));
-    switch (widget.tsklvl) {
-      case 0:
-        dropdownvalue = "Normal";
-        break;
-      case 1:
-        dropdownvalue = "Needs Action";
-        break;
-      case 2:
-        dropdownvalue = "Urgent";
-        break;
-      default:
-        dropdownvalue = "Normal";
-    }
+    dropdownvalue = tskLevelMapFromInt[widget.tsklvl] ?? 'Normal';
   }
 
   bool _isLoading = false;
@@ -179,7 +168,7 @@ editCard(String id, String subjcode, String tskdesc, String tskdate,
     String tsklvl, BuildContext context) async {
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
   String token = sharedPreferences.getString("token");
-  int tsklvl_int = tskLevelMap[tsklvl] ?? 0;
+  int tsklvl_int = tskLevelMapFromString[tsklvl] ?? 0;
   Map<String, String> headers = {
     'Accept': '*/*',
     "Access-Control_Allow_Origin": "*",
@@ -193,7 +182,7 @@ editCard(String id, String subjcode, String tskdesc, String tskdate,
     'tskdate': tskdate,
     'tsklvl': tsklvl_int
   };
-  var response = await http.post(Uri.parse(cardsURI + "/" + id),
+  var response = await http.post(Uri.parse('${cardsURI}/${id}'),
       headers: headers, body: jsonEncode(data));
   if (response.statusCode == 204) {
     print("Successful");

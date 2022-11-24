@@ -4,13 +4,13 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:remcards/const.dart';
 import 'package:remcards/main.dart';
-import 'package:remcards/pages/components/roundedtextfield.dart';
+import 'package:remcards/pages/components/RoundedTextField.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'components/AppBar.dart';
 
 class editSchedForm extends StatefulWidget {
   final String id;
-  final String day;
+  final int day;
   final String title;
   final int hourStart;
   final int minStart;
@@ -185,7 +185,7 @@ class _editSchedForm extends State<editSchedForm> {
 }
 
 editSched(
-    String day, String id, String title, String start, String finish) async {
+    int day, String id, String title, String start, String finish) async {
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
   String token = sharedPreferences.getString("token");
   Map<String, String> headers = {
@@ -196,7 +196,7 @@ editSched(
   };
 
   Map data = {"subject": title, "time": (start + "-" + finish)};
-  var response = await http.post(Uri.parse(schedURI + "/" + day + "/" + id),
+  var response = await http.post(Uri.parse('${schedURI}/${day}/${id}'),
       headers: headers, body: jsonEncode(data));
   if (response.statusCode == 204) {
     print("Successful");
@@ -206,7 +206,7 @@ editSched(
   Get.back();
 }
 
-deleteSched(String id, String day) async {
+deleteSched(String id, int day) async {
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
   String token = sharedPreferences.getString("token");
   Map<String, String> headers = {
@@ -216,7 +216,7 @@ deleteSched(String id, String day) async {
     "x-access-token": token,
   };
 
-  var response = await http.delete(Uri.parse(schedURI + "/" + day + "/" + id),
+  var response = await http.delete(Uri.parse('${schedURI}/${day}/${id}'),
       headers: headers);
   if (response.statusCode == 204) {
     print("Successful");

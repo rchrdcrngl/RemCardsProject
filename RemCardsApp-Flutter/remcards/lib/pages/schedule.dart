@@ -7,10 +7,12 @@ import 'package:flutter_timetable_view/flutter_timetable_view.dart';
 import 'package:get/get.dart';
 import 'package:remcards/components/notifications.dart';
 import 'package:remcards/pages/addsched.dart';
+import 'package:remcards/pages/components/ScheduleHeader.dart';
 import 'package:remcards/pages/editsched.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../const.dart';
 import 'components/AppBar.dart';
+import 'components/EventTable.dart';
 
 class SchedulePage extends StatefulWidget {
   final bool isRefresh;
@@ -21,79 +23,9 @@ class SchedulePage extends StatefulWidget {
   _SchedulePageState createState() => _SchedulePageState();
 }
 
-class eventTable {
-  final String id;
-  final String day;
-  final String name;
-  final int hourStart;
-  final int minStart;
-  final int hourFinish;
-  final int minFinish;
-  static List<eventTable> list = [];
 
-  static void setList(List<eventTable> lst) {
-    list = lst;
-  }
 
-  const eventTable(
-      {this.day,
-      this.id,
-      this.name,
-      this.hourStart,
-      this.minStart,
-      this.hourFinish,
-      this.minFinish});
-
-  factory eventTable.fromJson(String dayStr, Map<String, dynamic> json) {
-    var startTime = json['startTime'];
-    var endTime = json['endTime'];
-    var start = startTime.split(":");
-    var end = endTime.split(":");
-    var hS = int.parse(start[0]);
-    var mS = int.parse(start[1]);
-    var hF = int.parse(end[0]);
-    var mF = int.parse(end[1]);
-    return eventTable(
-        day: dayStr,
-        id: json["_id"].toString(),
-        name: json["subject"].toString(),
-        hourStart: hS,
-        minStart: mS,
-        hourFinish: hF,
-        minFinish: mF);
-  }
-
-  TableEvent convert() {
-    list.add(this);
-    return TableEvent(
-        //backgroundColor: Colors.orange[50],
-        textStyle: TextStyle(color: Colors.deepOrange[800], fontSize: 10),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5), color: Colors.orange[50]),
-        title: this.name,
-        start: TableEventTime(hour: this.hourStart, minute: this.minStart),
-        end: TableEventTime(hour: this.hourFinish, minute: this.minFinish),
-        onTap: () => edit(this.day, this.id, this.name, this.hourStart,
-            this.minStart, this.hourFinish, this.minFinish));
-  }
-
-  String toString() {
-    return "eventTable: " +
-        id +
-        " " +
-        name +
-        " " +
-        hourStart.toString() +
-        " " +
-        minStart.toString() +
-        " " +
-        hourFinish.toString() +
-        " " +
-        minFinish.toString();
-  }
-}
-
-edit(String day, String id, String title, int hourStart, int minStart,
+edit(int day, String id, String title, int hourStart, int minStart,
     int hourFinish, int minFinish) {
   Get.to(() => editSchedForm(
       day, id, title, hourStart, minStart, hourFinish, minFinish));
@@ -101,19 +33,19 @@ edit(String day, String id, String title, int hourStart, int minStart,
 
 class dayTable {
   final String id;
-  final String day;
+  final int day;
   final List<dynamic> data;
   const dayTable({this.id, this.day, this.data});
 
   factory dayTable.fromJson(Map<String, dynamic> json) {
     return dayTable(
         id: json["_id"].toString(),
-        day: json["day"].toString(),
+        day: json["day"],
         data: json["data"]);
   }
 
   String toString() {
-    return "dayTable: " + id + " " + day + " " + data.toString();
+    return "dayTable: " + id + " " + day.toString() + " " + data.toString();
   }
 }
 
@@ -124,7 +56,7 @@ processNotification(List<dayTable> resp) async {
       daytbl1.data.forEach((element) {
         eventTable tbe = eventTable.fromJson(daytbl1.day, element);
         createScheduledNotification(
-            1, daysToNum[tbe.day] ?? 1, tbe.hourStart, tbe.minStart, tbe.name);
+            1, tbe.day, tbe.hourStart, tbe.minStart, tbe.name);
       });
     }
   }
@@ -132,7 +64,7 @@ processNotification(List<dayTable> resp) async {
 }
 
 
-Map<String, int> daysToNum = {'mon':1,'tue':2,'wed':3,'thu':4,'fri':5,'sat':6,'sun':7};
+Map<int, String> numToDay = {1:'Monday',2:'Tuesday',3:'Wednesday',4:'Thursday',5:'Friday',6:'Saturday',7:'Sunday'};
 
 class _SchedulePageState extends State<SchedulePage> {
   List<dayTable> dayTableList = [];
@@ -242,7 +174,7 @@ class _SchedulePageState extends State<SchedulePage> {
     if (daytbl.data != null) {
       daytbl.data.forEach((element) {
         eventTable tbe = eventTable.fromJson(daytbl.day, element);
-        a.add(tbe.convert());
+        a.add(tbe.convert(edit));
       });
       return a;
     } else {
@@ -256,63 +188,14 @@ class _SchedulePageState extends State<SchedulePage> {
       dayTableList.forEach((element) {
         list.add(LaneEvents(
             lane: Lane(
-                name: (element.day).toUpperCase(),
+                name: numToDay[element.day].substring(0,4).toUpperCase() ??'N/A',
                 width: (width / 8),
                 textStyle: TextStyle(color: Colors.brown, fontSize: 10)),
             events: eventTableBuilder(element)));
       });
       return list;
     } else {
-      print("empty LANEVENTS");
-      return [
-        LaneEvents(
-            lane: Lane(
-                name: 'SUN',
-                width: (width / 8),
-                textStyle: TextStyle(color: Colors.brown, fontSize: 10)),
-            events: []),
-        LaneEvents(
-            lane: Lane(
-                name: 'MON',
-                width: (width / 8),
-                textStyle: TextStyle(color: Colors.brown, fontSize: 10)),
-            events: []),
-        LaneEvents(
-          lane: Lane(
-              name: 'TUE',
-              width: (width / 8),
-              textStyle: TextStyle(color: Colors.brown, fontSize: 10)),
-          events: [],
-        ),
-        LaneEvents(
-          lane: Lane(
-              name: 'WED',
-              width: (width / 8),
-              textStyle: TextStyle(color: Colors.brown, fontSize: 10)),
-          events: [],
-        ),
-        LaneEvents(
-          lane: Lane(
-              name: 'THURS',
-              width: (width / 8),
-              textStyle: TextStyle(color: Colors.brown, fontSize: 10)),
-          events: [],
-        ),
-        LaneEvents(
-          lane: Lane(
-              name: 'FRI',
-              width: (width / 8),
-              textStyle: TextStyle(color: Colors.brown, fontSize: 10)),
-          events: [],
-        ),
-        LaneEvents(
-          lane: Lane(
-              name: 'SAT',
-              width: (width / 8),
-              textStyle: TextStyle(color: Colors.brown, fontSize: 10)),
-          events: [],
-        ),
-      ];
+      return ScheduleHeader(width);
     }
   }
 }

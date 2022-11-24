@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:remcards/pages/components/roundedtextfield.dart';
+import 'package:remcards/pages/components/RoundedTextField.dart';
 import 'package:remcards/pages/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';

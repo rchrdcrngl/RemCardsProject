@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:remcards/const.dart';
+import 'package:remcards/pages/components/DayPicker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'components/AppBar.dart';
-import 'components/roundedtextfield.dart';
+import 'components/RoundedTextField.dart';
 
 class addSchedForm extends StatefulWidget {
   final Function refresh;
@@ -19,7 +20,7 @@ class addSchedForm extends StatefulWidget {
 class _addSchedForm extends State<addSchedForm> {
   TimeOfDay _startTime;
   TimeOfDay _endTime;
-  List<String> daySelected;
+  List<int> daySelected;
   @override
   void initState() {
     super.initState();
@@ -75,56 +76,8 @@ class _addSchedForm extends State<addSchedForm> {
   List<bool> _isSelected = [false, false, false, false, false, false, false];
 
   selectDay(int index) {
-    switch (index) {
-      case 0:
-        if (_isSelected[index] == true)
-          daySelected.add("sun");
-        else
-          daySelected.removeWhere((element) => element == "sun");
-        break;
-      case 1:
-        if (_isSelected[index] == true)
-          daySelected.add("mon");
-        else
-          daySelected.removeWhere((element) => element == "mon");
-        break;
-      case 2:
-        if (_isSelected[index] == true)
-          daySelected.add("tue");
-        else
-          daySelected.removeWhere((element) => element == "tue");
-        break;
-      case 3:
-        if (_isSelected[index] == true)
-          daySelected.add("wed");
-        else
-          daySelected.removeWhere((element) => element == "wed");
-        break;
-      case 4:
-        if (_isSelected[index] == true)
-          daySelected.add("thurs");
-        else
-          daySelected.removeWhere((element) => element == "thurs");
-        break;
-      case 5:
-        if (_isSelected[index] == true)
-          daySelected.add("fri");
-        else
-          daySelected.removeWhere((element) => element == "fri");
-        break;
-      case 6:
-        if (_isSelected[index] == true)
-          daySelected.add("sat");
-        else
-          daySelected.removeWhere((element) => element == "sat");
-        break;
-      default:
-        if (_isSelected[index] == true)
-          daySelected.add("sun");
-        else
-          daySelected.removeWhere((element) => element == "sun");
-        break;
-    }
+    var dayVal = index == 7? 0 : index;
+    _isSelected[index] ? daySelected.add(dayVal) : daySelected.remove(dayVal);
   }
 
   Widget build(BuildContext context) {
@@ -142,43 +95,11 @@ class _addSchedForm extends State<addSchedForm> {
                           child: ClipRRect(
                               child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
-                        child: ToggleButtons(
-                            children: <Widget>[
-                              Text("SUN",
-                                  style: TextStyle(
-                                      fontSize: 10, color: Colors.brown[600])),
-                              Text("MON",
-                                  style: TextStyle(
-                                      fontSize: 10, color: Colors.brown[600])),
-                              Text("TUE",
-                                  style: TextStyle(
-                                      fontSize: 10, color: Colors.brown[600])),
-                              Text("WED",
-                                  style: TextStyle(
-                                      fontSize: 10, color: Colors.brown[600])),
-                              Text("THU",
-                                  style: TextStyle(
-                                      fontSize: 10, color: Colors.brown[600])),
-                              Text("FRI",
-                                  style: TextStyle(
-                                      fontSize: 10, color: Colors.brown[600])),
-                              Text("SAT",
-                                  style: TextStyle(
-                                      fontSize: 10, color: Colors.brown[600]))
-                            ],
-                            isSelected: _isSelected,
-                            renderBorder: false,
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            fillColor: Colors.amberAccent[100],
-                            onPressed: (int index) {
-                              setState(() {
-                                _isSelected[index] = !_isSelected[index];
-                                print(daySelected);
-                                selectDay(index);
-                                print(daySelected.toString());
-                              });
-                            }),
-                      )))
+                        child: dayPicker(
+                          isSelected: _isSelected,
+                          setState: setState,
+                          selectDay: selectDay
+                        ))))
                     ],
                   ),
                   SizedBox(height: 25.0),
@@ -266,7 +187,7 @@ class _addSchedForm extends State<addSchedForm> {
   }
 }
 
-addSched(List<String> day, String title, String start, String finish) async {
+addSched(List<int> day, String title, String start, String finish) async {
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
   String token = sharedPreferences.getString("token");
   Map<String, String> headers = {
@@ -278,7 +199,7 @@ addSched(List<String> day, String title, String start, String finish) async {
 
   day.forEach((element) async {
     Map data = {"subject": title, "startTime": start, "endTime": finish};
-    var response = await http.post(Uri.parse(schedURI + "/" + element),
+    var response = await http.post(Uri.parse('${schedURI}/${element}'),
         headers: headers, body: jsonEncode(data));
     if (response.statusCode == 200) {
       print("Successful");

@@ -13,78 +13,24 @@ import 'package:remcards/pages/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'components/AppBar.dart';
+import 'components/RemCard.dart';
 
-class remCard {
-  final String id;
-  final String subjcode;
-  final String tskdesc;
-  final String tskdate;
-  final int tsklvl;
-  final int tskstat;
 
-  remCard(
-      {this.id,
-      this.subjcode,
-      this.tskdesc,
-      this.tskdate,
-      this.tsklvl,
-      this.tskstat});
+//============ values ================================
+Map<int,Icon> iconMap = {
+  0:Icon(Icons.adjust_rounded, color: Colors.white),
+  1:Icon(Icons.double_arrow_rounded, color: Colors.white),
+  2:Icon(Icons.history_toggle_off_rounded, color: Colors.white),
+  3:Icon(Icons.stars_rounded, color: Colors.white),
+  4:Icon(Icons.check_circle_rounded, color: Colors.white)};
 
-  factory remCard.fromJson(Map<String, dynamic> json) {
-    return remCard(
-        id: json['_id'],
-        subjcode: json['subjcode'],
-        tskdesc: json['tskdesc'],
-        tskdate: json['tskdate'],
-        tsklvl: json['tsklvl'],
-        tskstat: json['tskstat']);
-  }
-}
+Map<int,Color> color = {
+  0: Color(0xFF2980b9),
+  1: Color(0xFFf1c40f),
+  2: Color(0xFFe74c3c),
+};
 
-//============ custom widget ================================
-
-Icon icon(int tskstat) {
-  switch (tskstat) {
-    case 0:
-      return Icon(Icons.adjust_rounded, color: Colors.white);
-      break;
-    case 1:
-      return Icon(Icons.double_arrow_rounded, color: Colors.white);
-      break;
-    case 2:
-      return Icon(Icons.history_toggle_off_rounded, color: Colors.white);
-      break;
-    case 3:
-      return Icon(Icons.stars_rounded, color: Colors.white);
-      break;
-    case 4:
-      return Icon(Icons.check_circle_rounded, color: Colors.white);
-      break;
-    default:
-      return Icon(Icons.adjust_rounded, color: Colors.white);
-      break;
-  }
-}
-
-Color color(int tsklvl) {
-  switch (tsklvl) {
-    case 0:
-      return Color(0xFF2980b9);
-      break;
-    case 1:
-      return Color(0xFFf1c40f);
-      break;
-    case 2:
-      return Color(0xFFe74c3c);
-      break;
-    default:
-      return Color(0xFF2980b9);
-      break;
-  }
-}
-
-//======================= test ===========
-
+//======================= builder ===========
 class cardBuilder2 extends StatefulWidget {
   final bool isRefresh;
 
@@ -279,12 +225,12 @@ class _cardBuilder2State extends State<cardBuilder2> {
                           incstat(id, tskstat);
                           cardBuilder2.of(context).refresh();
                         },
-                        child: icon(tskstat),
+                        child: iconMap[tskstat]??Icon(Icons.adjust_rounded, color: Colors.white),
                         style: ButtonStyle(
                           shape: MaterialStateProperty.all(CircleBorder()),
                           padding: MaterialStateProperty.all(EdgeInsets.all(5)),
                           backgroundColor: MaterialStateProperty.all(
-                              color(tsklvl)), // <-- Button color
+                              color[tsklvl]??Color(0xFF2980b9)), // <-- Button color
                         ),
                       )
                     ],

@@ -1,1 +1,0 @@
-C:\Users\Richard Maru\Documents\School Works\PROGRAMMING\Flutter\flutter\.pub-cache\hosted\pub.dartlang.org\flutter_native_timezone-2.0.0\android\src\main\kotlin\com\whelksoft\flutter_native_timezone\FlutterNativeTimezonePlugin.kt
