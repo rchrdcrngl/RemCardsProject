@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class remCard {
   final String id;
   final String subjcode;
@@ -19,7 +21,7 @@ class remCard {
         id: json['_id'],
         subjcode: json['subjcode'],
         tskdesc: json['tskdesc'],
-        tskdate: json['tskdate'],
+        tskdate: DateFormat("M/d/y").format(DateTime.parse(json['tskdate'])) ?? '',
         tsklvl: json['tsklvl'],
         tskstat: json['tskstat']);
   }
