@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_timetable_view/flutter_timetable_view.dart';
 
-class eventTable {
+class Period {
   final String id;
   final int day;
   final String name;
@@ -9,13 +9,13 @@ class eventTable {
   final int minStart;
   final int hourFinish;
   final int minFinish;
-  static List<eventTable> list = [];
+  static List<Period> list = [];
 
-  static void setList(List<eventTable> lst) {
+  static void setList(List<Period> lst) {
     list = lst;
   }
 
-  const eventTable(
+  const Period(
       {this.day,
       this.id,
       this.name,
@@ -24,7 +24,7 @@ class eventTable {
       this.hourFinish,
       this.minFinish});
 
-  factory eventTable.fromJson(int dayStr, Map<String, dynamic> json) {
+  factory Period.fromJson(int dayStr, Map<String, dynamic> json) {
     var startTime = json['startTime'];
     var endTime = json['endTime'];
     var start = startTime.split(":");
@@ -33,7 +33,7 @@ class eventTable {
     var mS = int.parse(start[1]);
     var hF = int.parse(end[0]);
     var mF = int.parse(end[1]);
-    return eventTable(
+    return Period(
         day: dayStr,
         id: json["_id"].toString(),
         name: json["subject"].toString(),
@@ -43,10 +43,9 @@ class eventTable {
         minFinish: mF);
   }
 
-  TableEvent convert(Function edit) {
+  TableEvent convert({Function edit}) {
     list.add(this);
     return TableEvent(
-        //backgroundColor: Colors.orange[50],
         textStyle: TextStyle(color: Colors.deepOrange[800], fontSize: 10),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5), color: Colors.orange[50]),

@@ -3,32 +3,17 @@ import 'dart:convert';
 import 'package:api_cache_manager/models/cache_db_model.dart';
 import 'package:api_cache_manager/utils/cache_manager.dart';
 import 'package:get/get.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:remcards/const.dart';
-import 'package:remcards/pages/editcard.dart';
-import 'package:remcards/pages/increment.dart';
+import 'package:remcards/pages/components/Card.dart';
+import 'package:remcards/pages/components/RequestHeader.dart';
+import 'package:remcards/pages/components/SessionHandler.dart';
+import 'package:remcards/pages/components/CardFunctions.dart';
 import 'package:remcards/pages/login.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 import 'components/AppBar.dart';
 import 'components/RemCard.dart';
 
-
-//============ values ================================
-Map<int,Icon> iconMap = {
-  0:Icon(Icons.adjust_rounded, color: Colors.white),
-  1:Icon(Icons.double_arrow_rounded, color: Colors.white),
-  2:Icon(Icons.history_toggle_off_rounded, color: Colors.white),
-  3:Icon(Icons.stars_rounded, color: Colors.white),
-  4:Icon(Icons.check_circle_rounded, color: Colors.white)};
-
-Map<int,Color> color = {
-  0: Color(0xFF2980b9),
-  1: Color(0xFFf1c40f),
-  2: Color(0xFFe74c3c),
-};
 
 //======================= builder ===========
 class cardBuilder2 extends StatefulWidget {
@@ -45,25 +30,17 @@ class cardBuilder2 extends StatefulWidget {
 class _cardBuilder2State extends State<cardBuilder2> {
   StreamController _cardController;
   bool isUpdated = false;
-  bool fetcherror = false;
+  bool fetchError = false;
   bool unauthorized = false;
   refresh() => _refresh();
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
 
   int count = 1;
 
-  Future fetchPost([howMany = 5]) async {
+  Future fetchData([howMany = 5]) async {
     var cacheExists = await APICacheManager().isAPICacheKeyExist("API-Cards");
     if (!cacheExists) {
-      SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
-      String token = sharedPreferences.getString("token");
-      Map<String, String> headers = {
-        'Accept': '*/*',
-        "Access-Control_Allow_Origin": "*",
-        "Content-Type": "application/json",
-        "x-access-token": token,
-      };
+      final headers = await getRequestHeaders();
       final response = await http.get(Uri.parse(cardsURI), headers: headers);
 
       if (response.statusCode == 200) {
@@ -73,16 +50,15 @@ class _cardBuilder2State extends State<cardBuilder2> {
         await APICacheManager().addCacheData(cacheDBModel);
 
         List jsonResponse = json.decode(response.body);
-        return jsonResponse.map((card) => new remCard.fromJson(card)).toList();
+        return jsonResponse.map((card) => new RemCard.fromJson(card)).toList();
       } else if (response.statusCode == 401) {
-        sharedPreferences.clear();
-        sharedPreferences.commit();
+        invalidateSession();
         setState(() {
           unauthorized = true;
         });
       } else {
         setState(() {
-          fetcherror = true;
+          fetchError = true;
         });
         throw Exception('Failed to load RemCards');
       }
@@ -90,12 +66,13 @@ class _cardBuilder2State extends State<cardBuilder2> {
       var cacheData = await APICacheManager().getCacheData("API-Cards");
 
       List jsonResponse = json.decode(cacheData.syncData);
-      return jsonResponse.map((card) => new remCard.fromJson(card)).toList();
+      return jsonResponse.map((card) => new RemCard.fromJson(card)).toList();
     }
   }
+  
 
-  loadPosts() async {
-    fetchPost().then((res) async {
+  parseData() async {
+    fetchData().then((res) async {
       _cardController.add(res);
       return res;
     });
@@ -119,7 +96,7 @@ class _cardBuilder2State extends State<cardBuilder2> {
     count++;
     print("Refresh: ${count}");
     APICacheManager().deleteCache("API-Cards");
-    fetchPost(count * 5).then((res) async {
+    fetchData(count * 5).then((res) async {
       _cardController.add(res);
       return null;
     });
@@ -129,7 +106,7 @@ class _cardBuilder2State extends State<cardBuilder2> {
   void initState() {
     super.initState();
     _cardController = new StreamController();
-    loadPosts();
+    parseData();
     if (widget.isRefresh) {
       refresh();
     }
@@ -160,12 +137,12 @@ class _cardBuilder2State extends State<cardBuilder2> {
                         maxLines: 2,
                         style: TextStyle(fontFamily: 'Montserrat')));
               } else if (snapshot.hasData) {
-                List<remCard> data = snapshot.data;
+                List<RemCard> data = snapshot.data;
                 return _cardBuilder(data);
               } else if (snapshot.hasError) {
                 print(snapshot.error);
                 return Center(child: Text("${snapshot.error}"));
-              } else if (fetcherror) {
+              } else if (fetchError) {
                 return Center(
                     child: Text("Can't load RemCards at the moment."));
               } else if (unauthorized) {
@@ -179,97 +156,19 @@ class _cardBuilder2State extends State<cardBuilder2> {
         ));
   }
 
-  Widget _card(String id, String subjcode, String tskdesc, String tskdate,
-      int tsklvl, int tskstat, BuildContext context) {
-    tskstat = tskstat % 5;
-    return Slidable(
-      key: const ValueKey(0),
-      startActionPane: ActionPane(
-        motion: const BehindMotion(),
-        children: [
-          SlidableAction(
-            onPressed: (context) => {delcard(id), refresh()},
-            backgroundColor: Color(0xFFFE4A49),
-            foregroundColor: Colors.white,
-            icon: Icons.delete,
-            label: 'Delete',
-          )
-        ],
-      ),
-      child: Card(
-        elevation: 2,
-        child: InkWell(
-            child: ClipPath(
-              child: Container(
-                  padding: EdgeInsets.all(10),
-                  child: Row(
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(tskdesc,
-                              style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.w700)),
-                          Text(subjcode,
-                              style: TextStyle(fontFamily: 'Montserrat')),
-                          Text(tskdate,
-                              style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.w300))
-                        ],
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          incstat(id, tskstat);
-                          cardBuilder2.of(context).refresh();
-                        },
-                        child: iconMap[tskstat]??Icon(Icons.adjust_rounded, color: Colors.white),
-                        style: ButtonStyle(
-                          shape: MaterialStateProperty.all(CircleBorder()),
-                          padding: MaterialStateProperty.all(EdgeInsets.all(5)),
-                          backgroundColor: MaterialStateProperty.all(
-                              color[tsklvl]??Color(0xFF2980b9)), // <-- Button color
-                        ),
-                      )
-                    ],
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  )),
-              clipper: ShapeBorderClipper(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10))),
-            ),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => editCardForm(
-                        id: id,
-                        subjcode: subjcode,
-                        tskdesc: tskdesc,
-                        tskdate: tskdate,
-                        tsklvl: tsklvl,
-                        tskstat: tskstat,
-                        callback: refresh),
-                  ));
-            }),
-      ),
-    );
-  }
+  
 
   ListView _cardBuilder(data) {
     return ListView.builder(
         itemCount: data.length,
         itemBuilder: (context, index) {
-          return _card(
-              data[index].id,
-              data[index].subjcode,
-              data[index].tskdesc,
-              data[index].tskdate,
-              data[index].tsklvl,
-              data[index].tskstat,
-              context);
+          return RCard(
+                remcard: data[index],
+                deleteCard: deleteCard,
+                refresh: refresh,
+                incrementStatus: incrementStatus,
+                context: context,
+              );
         });
   }
 }

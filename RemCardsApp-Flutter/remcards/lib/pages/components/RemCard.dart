@@ -1,14 +1,14 @@
 import 'package:intl/intl.dart';
 
-class remCard {
-  final String id;
-  final String subjcode;
-  final String tskdesc;
-  final String tskdate;
-  final int tsklvl;
-  final int tskstat;
+class RemCard {
+  String id;
+  String subjcode;
+  String tskdesc;
+  String tskdate;
+  int tsklvl;
+  int tskstat;
 
-  remCard(
+  RemCard(
       {this.id,
       this.subjcode,
       this.tskdesc,
@@ -16,12 +16,13 @@ class remCard {
       this.tsklvl,
       this.tskstat});
 
-  factory remCard.fromJson(Map<String, dynamic> json) {
-    return remCard(
+  factory RemCard.fromJson(Map<String, dynamic> json) {
+    return RemCard(
         id: json['_id'],
         subjcode: json['subjcode'],
         tskdesc: json['tskdesc'],
-        tskdate: DateFormat("M/d/y").format(DateTime.parse(json['tskdate'])) ?? '',
+        tskdate:
+            DateFormat("M/d/y").format(DateTime.parse(json['tskdate'])) ?? '',
         tsklvl: json['tsklvl'],
         tskstat: json['tskstat']);
   }

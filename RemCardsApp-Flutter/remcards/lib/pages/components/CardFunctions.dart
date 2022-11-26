@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-import '../const.dart';
+import '../../const.dart';
 
-incstat(String id, int tskstat) async {
+incrementStatus(String id, int tskstat) async {
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
   String token = sharedPreferences.getString("token");
   Map<String, String> headers = {
@@ -23,7 +23,7 @@ incstat(String id, int tskstat) async {
   }
 }
 
-delcard(String id) async{
+deleteCard(String id) async{
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
   String token = sharedPreferences.getString("token");
   Map<String, String> headers = {

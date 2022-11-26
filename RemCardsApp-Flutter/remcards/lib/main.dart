@@ -1,13 +1,13 @@
 import 'dart:io';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
-import 'package:remcards/pages/addcard.dart';
-import 'package:remcards/pages/cardBuilder.dart';
+import 'package:remcards/pages/AddCard.dart';
+import 'package:remcards/pages/CardBuilder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
-import 'pages/login.dart';
-import 'pages/schedule.dart';
-import 'pages/settings.dart';
+import 'pages/Login.dart';
+import 'pages/Schedule.dart';
+import 'pages/Settings.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

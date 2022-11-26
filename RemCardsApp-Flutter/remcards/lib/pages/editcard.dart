@@ -3,33 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:remcards/const.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'components/AppBar.dart';
+import 'components/RemCard.dart';
+import 'components/RequestHeader.dart';
 import 'components/RoundedTextField.dart';
 
 const Map<String, int> tskLevelMapFromString = {'Normal':0, 'Needs Action': 1, 'Urgent': 2};
 const Map<int, String> tskLevelMapFromInt = {0:'Normal', 1:'Needs Action', 2:'Urgent'};
 
 class editCardForm extends StatefulWidget {
-  final String id;
-  final String subjcode;
-  final String tskdesc;
-  final String tskdate;
-  final int tsklvl;
-  final int tskstat;
+  final RemCard remcard;
   final Function callback;
-
-  //editCardForm(this.id, this.subjcode, this.tskdesc, this.tskdate, this.tsklvl,
-  //    this.tskstat);
 
   const editCardForm(
       {Key key,
-      this.id,
-      this.subjcode,
-      this.tskdesc,
-      this.tskdate,
-      this.tsklvl,
-      this.tskstat,
+      this.remcard,
       this.callback})
       : super(key: key);
 
@@ -61,15 +49,15 @@ class _editCardForm extends State<editCardForm> {
 
   @override
   void initState() {
-    subjectCode = new TextEditingController(text: widget.subjcode);
-    taskDesc = new TextEditingController(text: widget.tskdesc);
-    taskDate = new TextEditingController(text: widget.tskdate);
-    taskLevel = new TextEditingController(text: (widget.tsklvl).toString());
-    taskStat = new TextEditingController(text: (widget.tskstat).toString());
-    var dateParsed = (widget.tskdate).split("/");
+    subjectCode = new TextEditingController(text: widget.remcard.subjcode);
+    taskDesc = new TextEditingController(text: widget.remcard.tskdesc);
+    taskDate = new TextEditingController(text: widget.remcard.tskdate);
+    taskLevel = new TextEditingController(text: (widget.remcard.tsklvl).toString());
+    taskStat = new TextEditingController(text: (widget.remcard.tskstat).toString());
+    var dateParsed = (widget.remcard.tskdate).split("/");
     date = new DateTime(int.parse(dateParsed[2]), int.parse(dateParsed[0]),
         int.parse(dateParsed[1]));
-    dropdownvalue = tskLevelMapFromInt[widget.tsklvl] ?? 'Normal';
+    dropdownvalue = tskLevelMapFromInt[widget.remcard.tsklvl] ?? 'Normal';
   }
 
   bool _isLoading = false;
@@ -139,12 +127,10 @@ class _editCardForm extends State<editCardForm> {
                   SizedBox(height: 20.0),
                   ElevatedButton(
                       onPressed: () {
-                        editCard(widget.id, subjectCode.text, taskDesc.text,
-                            taskDate.text, dropdownvalue, context);
-                        // cardBuilder2.of(context).refresh();
+                        editCard(widget.remcard.id, subjectCode.text, taskDesc.text,
+                            taskDate.text, dropdownvalue);
                         Get.back();
                         widget.callback();
-                        //Get.off(() => MainPage());
                       },
                       style: ButtonStyle(
                           backgroundColor:
@@ -165,17 +151,9 @@ class _editCardForm extends State<editCardForm> {
 }
 
 editCard(String id, String subjcode, String tskdesc, String tskdate,
-    String tsklvl, BuildContext context) async {
-  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  String token = sharedPreferences.getString("token");
+    String tsklvl) async {
   int tsklvl_int = tskLevelMapFromString[tsklvl] ?? 0;
-  Map<String, String> headers = {
-    'Accept': '*/*',
-    "Access-Control_Allow_Origin": "*",
-    "Content-Type": "application/json",
-    "x-access-token": token,
-  };
-
+  final headers = await getRequestHeaders();
   Map data = {
     'subjcode': subjcode,
     'tskdesc': tskdesc,

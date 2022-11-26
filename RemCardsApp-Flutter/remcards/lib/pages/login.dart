@@ -123,42 +123,7 @@ class _LoginPageState extends State<LoginPage> {
         });
         sharedPreferences.setString("token", jsonResponse['accessToken']);
         sharedPreferences.setString("uname", username);
-        sharedPreferences.setString("pwd", pass);
         sharedPreferences.setBool("isProcessed", false);
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (BuildContext context) => MainPage()),
-            (Route<dynamic> route) => false);
-      }
-    } else {
-      setState(() {
-        _isLoading = false;
-      });
-      errorMsg = response.body;
-      print("The error message is: ${response.body}");
-    }
-  }
-
-  test() async {
-    Map data = {"username": "test", "password": "test"};
-    Map<String, String> headers = {
-      'Accept': '*/*',
-      "Access-Control_Allow_Origin": "*",
-      "Content-Type": "application/json"
-    };
-    var jsonResponse = null;
-    var response = await http.post(
-        Uri.parse("http://localhost:27017/api/auth/signin"),
-        headers: headers,
-        body: jsonEncode(data));
-    print("DEBUG: login-post");
-    print(response);
-    if (response.statusCode == 200) {
-      jsonResponse = json.decode(response.body);
-      print(jsonResponse);
-      if (jsonResponse != null) {
-        setState(() {
-          _isLoading = false;
-        });
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (BuildContext context) => MainPage()),
             (Route<dynamic> route) => false);

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:remcards/components/notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:remcards/pages/components/AppBar.dart';
-
 import 'login.dart';
 
 class Settings extends StatefulWidget {
