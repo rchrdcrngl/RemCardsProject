@@ -1,6 +1,7 @@
 import 'package:api_cache_manager/utils/cache_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:remcards/components/notifications.dart';
+import 'package:remcards/pages/components/UserFunctions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:remcards/pages/components/AppBar.dart';
 import 'login.dart';
@@ -38,16 +39,17 @@ class _Settings extends State<Settings> {
                     },
                     child: Text("Logout")),
                 ElevatedButton(
+                    style: ElevatedButton.styleFrom(primary: Colors.red),
                     onPressed: () {
-                      createTestNotification();
+                      clearRemCards();
                     },
-                    child: Text("Test Notif")),
+                    child: Text("Clear All RemCards")),
                 ElevatedButton(
+                    style: ElevatedButton.styleFrom(primary: Colors.red),
                     onPressed: () {
-                      createScheduledNotification(
-                          1, 1, 8, 0, "TEST SCHEDULED NOTIFICATION");
+                      clearSchedule();
                     },
-                    child: Text("Test Scheduled Notif"))
+                    child: Text("Clear Schedule"))
               ],
             )));
   }
