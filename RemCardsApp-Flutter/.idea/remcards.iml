@@ -3,11 +3,13 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
-      <excludeFolder url="file://$MODULE_DIR$/remcards/.dart_tool" />
+      <sourceFolder url="file://$MODULE_DIR$/remcards/.dart_tool" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/remcards/build" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/remcards/build" />
       <excludeFolder url="file://$MODULE_DIR$/remcards/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/remcards/.dart_tool" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="Android API 30 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Dart SDK" level="project" />
     <orderEntry type="library" name="Dart Packages" level="project" />
